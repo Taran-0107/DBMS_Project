@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Page</title>
+<style>
+    /* Styles for header, buttons, etc. */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to left, #6e3ea5, #44778f);
+        color: #333;
+    }
+    .header {
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-size: 24px;
+    }
+    .user-icon {
+        cursor: pointer;
+        font-size: 20px;
+    }
+    .home-button {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .home-button:hover {
+        background-color: #555;
+    }
+    /* Styles for vendor options */
+    .vendor-options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+    .vendor-option {
+        background-color: #fff;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    .vendor-option:hover {
+        transform: scale(1.05);
+    }
+    /* Styles for form */
+    .form-container {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+        animation: slideIn 0.5s ease;
+    }
+    .form-container.active {
+        display: block;
+    }
+    .form-input {
+        margin-bottom: 10px;
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .form-button {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .form-button:hover {
+        background-color: #555;
+    }
+    /* Styles for table */
+    .product-table {
+        display: none;
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        animation: slideIn 0.5s ease;
+    }
+    .product-table th,
+    .product-table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        text-align: left;
+        position: relative;
+    }
+    .product-table th {
+        background-color: #f2f2f2;
+    }
+    .product-table tr:hover .delete-icon {
+        display: block;
+    }
+    .delete-icon {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        display: none;
+    }
+
+    /* Animation */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="home-button" onclick="goToHomePage()">Home</div>
+    <div class="logo">Vendor Page</div>
+    <div class="user-icon" onclick="toggleUserInfo()">👤</div>
+</div>
+
+<div class="vendor-options">
+    <div class="vendor-option" onclick="toggleForm()">Add Product</div>
+    <div class="vendor-option" onclick="toggleProducts()">View Products</div>
+</div>
+
+<div class="form-container" id="addProductForm">
+    <form>
+        <input type="text" class="form-input" placeholder="Product Name" required><br>
+        <input type="number" class="form-input" placeholder="Price" required><br>
+        <textarea class="form-input" placeholder="Description" required></textarea><br>
+        <button type="submit" class="form-button">Add</button>
+    </form>
+</div>
+
+<table class="product-table" id="productTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Product 1</td>
+            <td>$50</td>
+            <td>Description of Product 1</td>
+            <td><span class="delete-icon" onclick="deleteProduct(this)">🗑️</span></td>
+        </tr>
+        <tr>
+            <td>Product 2</td>
+            <td>$60</td>
+            <td>Description of Product 2</td>
+            <td><span class="delete-icon" onclick="deleteProduct(this)">🗑️</span></td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    function goToHomePage() {
+        window.location.href = 'home.html'; // Replace 'home.html' with the actual home page URL
+    }
+
+    function toggleUserInfo() {
+        // Functionality to toggle user info display
+        alert('Toggling user info');
+    }
+
+    function toggleForm() {
+        const form = document.getElementById('addProductForm');
+        form.classList.toggle('active');
+        // Hide the table when the form is active
+        document.getElementById('productTable').style.display = 'none';
+    }
+
+    function toggleProducts() {
+        const productTable = document.getElementById('productTable');
+        productTable.style.display = (productTable.style.display === 'none') ? 'table' : 'none';
+        // Hide the form when the table is active
+        document.getElementById('addProductForm').classList.remove('active');
+    }
+
+    function deleteProduct(element) {
+        const row = element.closest('tr');
+        row.parentNode.removeChild(row);
+    }
+</script>
+</body>
+</html>

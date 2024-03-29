@@ -10,7 +10,7 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f2f2f2;
+        background: linear-gradient(to left, #6e3ea5, #44778f);
         color: #333;
     }
     .header {
@@ -97,7 +97,7 @@
 </div>
 
 <div class="admin-options">
-    <div class="admin-option" onclick="displayData(res)">Manage Customers</div>
+    <div class="admin-option" onclick="displayData(customersData)">Manage Customers</div>
     <div class="admin-option" onclick="displayData(vendorsData)">Manage Vendors</div>
     <div class="admin-option" onclick="displayData(productsData)">Manage Products</div>
 </div>
@@ -108,13 +108,12 @@
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Action</th> <!-- Added Action column for delete button -->
         </tr>
     </thead>
     <tbody></tbody>
 </table>
-<script type="module" src="sqlconnect.js"></script>
 <script>
-    
     const customersData = [
         { name: 'Customer 1', email: 'customer1@example.com', phone: '123-456-7890' },
         { name: 'Customer 2', email: 'customer2@example.com', phone: '123-456-7891' },
@@ -134,7 +133,7 @@
     ];
 
     function goToHomePage() {
-        window.location.href = 'home.html'; // Replace 'home.html' with the actual home page URL
+        window.location.href = 'wow.html'; // Replace 'home.html' with the actual home page URL
     }
 
     function toggleUserInfo() {
@@ -154,6 +153,16 @@
                     row.appendChild(cell);
                 }
             }
+            const deleteCell = document.createElement('td'); // Create cell for delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                // Handle delete functionality here
+                // For demonstration, alerting the item to be deleted
+                alert('Deleting item: ' + JSON.stringify(item));
+            };
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
             tableBody.appendChild(row);
         });
         showTable();
